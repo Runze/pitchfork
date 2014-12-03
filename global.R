@@ -32,11 +32,11 @@ web_crawl = function() {
           artist = substr(s, 1, loc_3[1]-2)
           
           #extract tour information
-          s = gsub('<.*?>', '\n', s)
-          s = strsplit(s, '\n')
+          s = strsplit(s, '<br.*?>')
+          s = lapply(s, function(x) gsub('<.*?>', '', x))
           
           #find the rows that start with numbers (indicating dates)
-          d = grep('^[[:digit:]]', s[[1]])
+          d = grep('^[0-9]{2}-[0-9]{2}', s[[1]])
           tour = s[[1]][d]
           
           #combine artist and tour information and append to the data.frame
